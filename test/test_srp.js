@@ -44,7 +44,7 @@ vows.describe("srp.js")
       A = client.computeA();
 
       // create server
-      server = new srp.Server(params, verifier, b);
+      server = new srp.Server(params, salt, identity, verifier, b);
 
       // server produces B
       B = server.computeB();
@@ -80,7 +80,7 @@ vows.describe("srp.js")
       A = client.computeA();
 
       // create server
-      server = srp.Server(params, verifier, b);
+      server = srp.Server(params, salt, identity, verifier, b);
 
       // server produces B
       B = server.computeB();
@@ -111,7 +111,7 @@ vows.describe("srp.js")
 
     "server rejects wrong M1": function() {
       var bad_client = new srp.Client(params, salt, identity, Buffer("bad"), a);
-      var server2 = new srp.Server(params, verifier, b);
+      var server2 = new srp.Server(params, salt, identity, verifier, b);
       bad_client.setB(server2.computeB());
       assert.throws(function(){server.checkM1(bad_client.computeM1());},
                     /client did not use the same password/);
@@ -122,7 +122,7 @@ vows.describe("srp.js")
       // reject 2*N too, but our Buffer-length checks reject it before the
       // number itself is examined.
 
-      var server2 = new srp.Server(params, verifier, b);
+      var server2 = new srp.Server(params, salt, identity, verifier, b);
       var Azero = new Buffer(params.N_length_bits/8);
       Azero.fill(0);
       var AN = params.N.toBuffer();
@@ -157,7 +157,7 @@ vows.describe("srp.js")
       A = client.computeA();
 
       // create server
-      server = srp.Server(params, verifier, b);
+      server = srp.Server(params, salt, identity, verifier, b);
 
       // server produces B
       B = server.computeB();

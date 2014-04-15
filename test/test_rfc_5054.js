@@ -70,7 +70,7 @@ vows.describe('RFC 5054')
     },
 
     "B": function(v) {
-      var server = new srp.Server(params, v, b);
+      var server = new srp.Server(params, s, I, v, b);
       assert.equal(server.computeB().toString('hex'), B_expected);
     },
 
@@ -87,7 +87,7 @@ vows.describe('RFC 5054')
     },
 
     "S server": function(v) {
-      var server = new srp.Server(params, v, b);
+      var server = new srp.Server(params, s, I, v, b);
       server.setA(Buffer(A_expected, 'hex'));
       assert.equal(server._private.S_buf.toString('hex'), S_expected);
     }
